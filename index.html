@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz App</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  <!-- Quiz Container -->
+  <div class="bg-white w-full max-w-md p-6 rounded-lg shadow-lg">
+
+    <!-- Header -->
+    <h1 class="text-2xl font-bold text-center mb-6">
+      Quiz App
+    </h1>
+
+    <!-- Question -->
+    <h2 id="question" class="text-lg font-semibold mb-4">
+      Question text goes here
+    </h2>
+
+    <!-- Options -->
+    <div id="options" class="space-y-3">
+      <!-- Buttons will be injected by JS -->
+    
+    </div>
+
+    <!-- Next Button -->
+    <button
+      id="nextBtn"
+      class="mt-6 w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed" 
+    >
+      Next
+    </button>
+
+    <!-- Score Section -->
+    <div id="result" class="hidden text-center mt-6">
+     
+     
+      <button
+        id="restartBtn"
+        class=" bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+      >
+        Restart Quiz
+      </button>
+    </div>
+
+  </div>
+
+  <!-- JS File -->
+  <script src="app.js"></script>
+</body>
+</html>
