@@ -1,3 +1,9 @@
+const scoreGifs = {
+  high: "https://media.giphy.com/media/111ebonMs90YLu/giphy.gif",     // celebration
+  medium: "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif", // funny okay
+  low: "https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif",   // funny fail
+};
+
 const questionsData = [
   {
     question: "What is the output of `console.log(typeof NaN)` in JavaScript?",
@@ -79,6 +85,36 @@ function shuffleArray(array) {
     .map(({ value }) => value);
 }
 
+function confettiEffect() {
+  for (let i = 0; i < 30; i++) {
+    const confetti = document.createElement("div");
+
+    confetti.className =
+      "fixed w-2 h-2 bg-green-500 opacity-80 z-50";
+
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.top = "-10px";
+    confetti.style.transform =
+      `rotate(${Math.random() * 360}deg)`;
+
+    document.body.appendChild(confetti);
+
+    confetti.animate(
+      [
+        { transform: "translateY(0)" },
+        { transform: "translateY(100vh)" }
+      ],
+      {
+        duration: 1000 + Math.random() * 500,
+        easing: "ease-out"
+      }
+    );
+
+    setTimeout(() => confetti.remove(), 1500);
+  }
+}
+
+
 
 const questionPlace = document.querySelector("#question");
 const optionPlace = document.querySelector("#options");
@@ -140,6 +176,7 @@ function handleAnswer(button, selectedIndex) {
     // Correct answer clicked
     button.classList.add("bg-green-500", "text-white");
     score++;
+    confettiEffect(); //celebration effect trigger
   } else {
     // Wrong answer clicked
     button.classList.add("bg-red-500", "text-white");
@@ -166,18 +203,36 @@ nextBtn.addEventListener("click", () => {
 function showResult() {
   questionPlace.textContent = "Quiz Completed!";
   optionPlace.innerHTML = "";
+  nextBtn.disabled = true;
 
   resultPlace.classList.remove("hidden");
-  // inserted the pargraph of result inside the resultplace div
-  resultPlace.insertAdjacentHTML(
-    "afterbegin",
-    `<p class="text-xl font-bold">
-      Final Score: ${score} / ${questionsData.length}
-    </p>`
-  );
 
-  nextBtn.disabled = true;
+  const percentage =
+    (score / questionsData.length) * 100;
+
+  let gifSrc = "";
+
+  if (percentage >= 80) {
+    gifSrc = scoreGifs.high;
+  } else if (percentage >= 40) {
+    gifSrc = scoreGifs.medium;
+  } else {
+    gifSrc = scoreGifs.low;
+  }
+
+  const gifContainer = document.getElementById("gifContainer");
+  gifContainer.innerHTML = `
+    <img 
+      src="${gifSrc}" 
+      alt="Result GIF"
+      class="mx-auto rounded-lg w-64"
+    />
+    <p class="text-xl font-bold mt-4">
+      Your Score: ${score} / ${questionsData.length}
+    </p>
+  `;
 }
+
 
 // Restart quiz after all question 
 restartBtn.addEventListener("click", () => {
